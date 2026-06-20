@@ -4,8 +4,9 @@
 
 html,
 body {
-  width: 100%;
-  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 * {
@@ -106,6 +107,7 @@ nav a:hover::after {
 }
 
 .container-meus-presentes {
+  flex: 1;
   max-width: 1200px;
   margin: 20px auto;
   padding: 0 20px;
@@ -113,7 +115,7 @@ nav a:hover::after {
 
 .container-meus-presentes h1 {
   font-family: "Alex Brush", cursive;
-  font-size: 50px;
+  font-size: clamp(2.5rem, 6vw, 4rem);;
   color: #446ebd;
   text-align: center;
   margin-bottom: 30px;
@@ -171,7 +173,7 @@ nav a:hover::after {
 }
 
 footer {
-  margin-top: 100px;
+  margin-top: 0;
   background: #446ebd;
   color: white;
 }
@@ -235,6 +237,7 @@ footer {
 }
 
 @media (max-width: 768px) {
+
   html,
   body {
     overflow-x: hidden;
@@ -323,7 +326,46 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-    .footer-container {
+  .container-meus-presentes {
+    padding: 0 15px;
+  }
+
+  .container-meus-presentes h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  .busca-presente {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .busca-presente input {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .busca-presente button {
+    width: 100%;
+    max-width: 350px;
+    margin-left: 0;
+  }
+
+  .presente-card {
+    padding: 15px;
+  }
+
+  .presente-card h2 {
+    font-size: 18px;
+  }
+
+  .container-meus-presentes p {
+    font-size: 14px;
+  }
+
+
+  .footer-container {
     grid-template-columns: 1fr;
 
     gap: 30px;

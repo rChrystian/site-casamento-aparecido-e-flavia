@@ -9,7 +9,7 @@ const basicAuth = require("express-basic-auth");
 const { MercadoPagoConfig, Preference } = require("mercadopago");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000
 const adminAuth = basicAuth({
     users: {
         admin: "casamento123"

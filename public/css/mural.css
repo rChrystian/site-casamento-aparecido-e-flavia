@@ -4,8 +4,9 @@
 
 html,
 body {
-  width: 100%;
-  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 * {
@@ -106,48 +107,49 @@ nav a:hover::after {
 }
 
 #mural {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
 }
 
 .mensagem-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,.1);
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
 }
 
 .mensagem-card h3 {
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    margin-bottom: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
 .mensagem-card p {
-    font-family: "Poppins", sans-serif;
-    font-style: italic;
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
 }
 
 .container-mural {
-    max-width: 1200px;
-    margin: auto;
-    padding: 40px 20px;
-    text-align: center;
+  flex: 1;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
 }
 
 .container-mural h1 {
-    font-family: 'Alex Brush', cursive;
-    font-size: 3.5em;
-    color: #446ebd;
-    margin-bottom: 40px;
+  font-family: 'Alex Brush', cursive;
+  font-size: 3.5em;
+  color: #446ebd;
+  margin-bottom: 40px;
 }
 
 
 
 footer {
-  margin-top: 100px;
+  margin-top: 0;
   background: #446ebd;
   color: white;
 }
@@ -211,6 +213,7 @@ footer {
 }
 
 @media (max-width: 768px) {
+
   html,
   body {
     overflow-x: hidden;
@@ -299,7 +302,31 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-    .footer-container {
+  .container-mural {
+    padding: 30px 15px;
+  }
+
+  .container-mural h1 {
+    font-size: 2.5rem;
+  }
+
+  #mural {
+    padding: 10px;
+  }
+
+  .mensagem-card {
+    padding: 15px;
+  }
+
+  .mensagem-card h3 {
+    font-size: 18px;
+  }
+
+  .mensagem-card p {
+    font-size: 15px;
+  }
+
+  .footer-container {
     grid-template-columns: 1fr;
 
     gap: 30px;

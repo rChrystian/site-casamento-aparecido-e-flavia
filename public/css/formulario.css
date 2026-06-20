@@ -113,7 +113,8 @@ main {
 
 main h1 {
   text-align: center;
-  width: 50%;
+  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
   font-size: 30px;
   text-align: center;
@@ -127,7 +128,8 @@ main p {
 }
 
 #instrucao {
-  width: 20%;
+  max-width: 500px;
+  width: 100%;
   margin: 0 auto;
   font-size: 1rem;
   text-align: center;
@@ -135,46 +137,46 @@ main p {
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
 }
 
 form input {
-    font-weight: bold;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 form input::placeholder {
-    color: #999;
+  color: #999;
 }
 
 form textarea {
-    height: 150px;
-    font-weight: bold;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
+  height: 150px;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
 }
 
 form textarea::placeholder {
-    color: #999;
+  color: #999;
 }
 
 form button {
-    background-color: #446ebd;
-    color: white;
-    font-weight: bold;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #446ebd;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 footer {
@@ -226,6 +228,7 @@ footer {
 }
 
 @media (max-width: 768px) {
+
   html,
   body {
     overflow-x: hidden;
@@ -293,6 +296,40 @@ footer {
     text-align: center;
     padding: 18px;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  main h1 {
+    width: 100%;
+    font-size: 1.8rem;
+    padding: 0 10px;
+  }
+
+  main p {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  #instrucao {
+    width: 100%;
+    padding: 0 10px;
+    font-size: 0.95rem;
+  }
+
+  form {
+    width: 100%;
+    max-width: 100%;
+    margin: 30px auto;
+    padding: 15px;
+  }
+
+  form input,
+  form textarea,
+  form button {
+    width: 100%;
+  }
+
+  form textarea {
+    height: 120px;
   }
 
   .lista-presentes {
