@@ -154,7 +154,7 @@ nav a:hover::after {
   text-align: center;
 }
 
-.conteudo img {
+.foto-casal {
   width: 90%;
   max-width: 650px;
   margin-top: 30px;
@@ -347,6 +347,7 @@ footer {
 }
 
 @media (max-width: 768px) {
+
   html,
   body {
     overflow-x: hidden;
@@ -463,13 +464,12 @@ footer {
     margin: 0 0 30px;
   }
 
-  .conteudo img {
-    width: 100%;
-    max-width: 100%;
-
-    height: auto;
-
-    margin-top: 20px;
+  .foto-casal {
+    width: 90%;
+    max-width: 650px;
+    margin-top: 30px;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
   .nomes-casal {
@@ -577,5 +577,100 @@ footer {
   .footer-copy {
     font-size: 14px;
     padding: 15px;
+  }
+}
+
+.galeria-casal {
+  width: 100%;
+  margin: 60px auto;
+  text-align: center;
+}
+
+.galeria-casal h2 {
+  font-family: "Arizonia", cursive;
+  font-size: 3rem;
+  color: #446ebd;
+  margin-bottom: 30px;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+}
+
+.carousel-track {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.carousel-slide {
+  display: none;
+  width: 100%;
+  max-width: 900px;
+  height: 800px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+}
+
+.carousel-slide.active {
+  display: block;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: rgba(68, 110, 189, 0.8);
+  color: white;
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-btn:hover {
+  background: #446ebd;
+}
+
+.prev {
+  left: 15px;
+}
+
+.next {
+  right: 15px;
+}
+
+@media (max-width: 768px) {
+  .galeria-casal h2 {
+    font-size: 2.3rem;
+  }
+
+  .carousel {
+    width: 95%;
+  }
+
+  .carousel-slide {
+    height: 300px;
+  }
+
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .prev {
+    left: 5px;
+  }
+
+  .next {
+    right: 5px;
   }
 }

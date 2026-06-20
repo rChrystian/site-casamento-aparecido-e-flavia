@@ -1,11 +1,5 @@
 [
   {
-    "id": "teste",
-    "nome": "Teste",
-    "preco": 0.01,
-    "link": "/formulario"
-  },
-  {
     "id": "paineltv",
     "nome": "Painel para TV até 60 Polegadas 1 Porta Led NT 1115",
     "preco": 599.90,

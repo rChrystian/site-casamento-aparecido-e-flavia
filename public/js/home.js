@@ -54,3 +54,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
     setInterval(atualizarContador, 1000);
 });
+
+const slides = document.querySelectorAll(".carousel-slide");
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
+
+let currentSlide = 0;
+
+function mostrarSlide(index) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[index].classList.add("active");
+}
+
+if (slides.length > 0) {
+
+  nextBtn.addEventListener("click", () => {
+    currentSlide++;
+    
+    if (currentSlide >= slides.length) {
+      currentSlide = 0;
+    }
+
+    mostrarSlide(currentSlide);
+  });
+
+  prevBtn.addEventListener("click", () => {
+    currentSlide--;
+
+    if (currentSlide < 0) {
+      currentSlide = slides.length - 1;
+    }
+
+    mostrarSlide(currentSlide);
+  });
+
+  setInterval(() => {
+    currentSlide++;
+
+    if (currentSlide >= slides.length) {
+      currentSlide = 0;
+    }
+
+    mostrarSlide(currentSlide);
+  }, 4000);
+}
