@@ -1,0 +1,57 @@
+[
+  {
+    "id": "teste",
+    "nome": "Teste",
+    "preco": 0.01,
+    "link": "/formulario"
+  },
+  {
+    "id": "paineltv",
+    "nome": "Painel para TV até 60 Polegadas 1 Porta Led NT 1115",
+    "preco": 599.90,
+    "imagem": "/assets/paineltv.jpeg",
+    "link": "/formulario"
+  },
+  {
+    "id": "comoda",
+    "nome": "Cômoda para Quarto 7 Gavetas e 2 Portas Fontana",
+    "preco": 1087.48,
+    "imagem": "/assets/comoda.jpeg",
+    "link": "/formulario"
+  },
+  {
+    "id": "colchao",
+    "nome": "Colchão Casal Ortopédico 138x188x32 Double Face Espuma D45 Cinza",
+    "preco": 1220.00,
+    "imagem": "/assets/colchao.jpeg",
+    "link": "/formulario"
+  },
+  {
+    "id": "armariocozinha",
+    "nome": "Armário de Cozinha Completa 300cm Cinza Nice Madesa 01",
+    "preco": 2059.99,
+    "imagem": "/assets/armariocozinha.jpeg",
+    "link": "/formulario"
+  },
+  {
+    "id": "smarttv1",
+    "nome": "Smart TV 55' Samsung 4K UHD UN55U8600FGXZD",
+    "preco": 3399.00,
+    "imagem": "/assets/smarttv1.jpeg",
+    "link": "/formulario"
+  },
+  {
+    "id": "microondas",
+    "nome": "Micro-ondas 20L Branco Porta Preta Minuto Fácil Midea",
+    "preco": 519.00,
+    "imagem": "/assets/microondas.jpeg",
+    "link": "/formulario"
+  },
+  {
+    "id": "smarttv2",
+    "nome": "Smart TV 55' Samsung 4K OLED S85F QN55S85FAGXZD 120Hz Tizen NQ4 AI Gen2 Bixby Alexa 4 HDMI",
+    "preco": 4999.00,
+    "imagem": "/assets/smarttv2.jpeg",
+    "link": "/formulario"
+  }
+]
