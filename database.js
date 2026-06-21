@@ -1,25 +1,15 @@
-const sqlite3 = require("sqlite3").verbose();
+const { Pool } = require("pg");
 
-const db = new sqlite3.Database("./casamento.db", (err) => {
-    if (err) {
-        console.error(err.message);
-    } else {
-        console.log("Banco conectado!");
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false
     }
 });
 
-db.serialize(() => {
-    db.run(`
-        CREATE TABLE IF NOT EXISTS presentes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL,
-            telefone TEXT NOT NULL,
-            mensagem TEXT,
-            presente_id TEXT NOT NULL,
-            status TEXT DEFAULT 'pendente',
-            data DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    `);
-});
+pool.connect()
+    .then(() => console.log("PostgreSQL conectado!"))
+    .catch(err => console.error(err));
 
-module.exports = db;
+module.exports = pool;
+
