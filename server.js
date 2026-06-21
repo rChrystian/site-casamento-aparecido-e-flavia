@@ -19,16 +19,7 @@ const db = require("./database");
 
         console.error(err);
     }
-})();
-
-console.log(db);
-(async () => {
-    try {
-        const teste = await db.query("SELECT NOW()");
-        console.log("POSTGRES OK:", teste.rows);
-    } catch (err) {
-        console.error("ERRO POSTGRES:", err);
-    }
+    
 })();
 
 const express = require("express");
