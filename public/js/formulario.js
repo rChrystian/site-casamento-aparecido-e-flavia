@@ -38,6 +38,18 @@ fetch("/data/presentes.json")
           return;
         }
 
+        const continuar = confirm(
+          "IMPORTANTE!\n\n" +
+          "Para garantir o parcelamento sem juros, recomendamos que você NÃO esteja logado em uma conta do Mercado Pago durante o pagamento.\n\n" +
+          "Caso esteja logado no aplicativo ou site do Mercado Pago, faça logout antes de continuar.\n\n" +
+          "Deseja prosseguir?"
+        );
+
+        if (!continuar) {
+          return;
+        }
+
+
         const nome =
           document.querySelector('[name="nome"]').value;
 

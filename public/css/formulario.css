@@ -179,6 +179,19 @@ form button {
   cursor: pointer;
 }
 
+.aviso-mp {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff8e1;
+  border: 1px solid #ffd54f;
+  border-radius: 10px;
+  color: #6d4c41;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  font-weight: 500;
+}
+
 footer {
   background: #446ebd;
   color: white;
