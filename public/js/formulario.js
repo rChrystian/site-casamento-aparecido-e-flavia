@@ -66,8 +66,10 @@ fetch("/data/presentes.json")
 
           const dados = await resposta.json();
 
-          window.location.href =
+          const urlPagamento =
             `/criar-pagamento/${presente.id}?registro=${dados.id}`;
+
+          window.open(urlPagamento, "_blank");
         } catch (erro) {
           console.error("Erro ao salvar formulário:", erro);
           alert("Não foi possível salvar seus dados. Tente novamente.");

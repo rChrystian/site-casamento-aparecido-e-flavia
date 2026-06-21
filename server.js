@@ -107,7 +107,6 @@ app.get("/criar-pagamento/:id", async (req, res) => {
 
         const resposta = await preference.create({
             body: {
-
                 external_reference: String(registroId),
 
                 items: [
@@ -117,7 +116,12 @@ app.get("/criar-pagamento/:id", async (req, res) => {
                         currency_id: "BRL",
                         unit_price: Number(presente.preco)
                     }
-                ]
+                ],
+
+                payment_methods: {
+                    installments: 12,
+                    default_installments: 1
+                }
             }
         });
 
@@ -126,7 +130,7 @@ app.get("/criar-pagamento/:id", async (req, res) => {
         console.log("Presente:", presente);
         console.log("Preço:", presente.preco);
         console.log("Tipo:", typeof presente.preco);
-        res.redirect(resposta.init_point);
+        res.redirect(resposta.sandbox_init_point || resposta.init_point);
 
     } catch (erro) {
 
@@ -175,7 +179,7 @@ app.get("/cancelar/:id", adminAuth, (req, res) => {
         WHERE id = ?
         `,
         [req.params.id],
-        function(err) {
+        function (err) {
 
             if (err) {
                 return res.status(500).send("Erro");
@@ -230,7 +234,7 @@ app.get("/cancelar/:id", (req, res) => {
         WHERE id = ?
         `,
         [req.params.id],
-        function(err) {
+        function (err) {
 
             if (err) {
                 return res.status(500).send("Erro");
