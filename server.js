@@ -117,263 +117,213 @@ app.post("/salvar-formulario", async (req, res) => {
 
 });
 
-    // MERCADO PAGO
-    app.get("/criar-pagamento/:id", async (req, res) => {
+// MERCADO PAGO
+app.get("/criar-pagamento/:id", async (req, res) => {
 
-        const registroId = req.query.registro;
+    const registroId = req.query.registro;
 
-        try {
+    try {
 
-            const presentes = JSON.parse(
-                fs.readFileSync(
-                    path.join(__dirname, "public", "data", "presentes.json"),
-                    "utf8"
-                )
-            );
+        const presentes = JSON.parse(
+            fs.readFileSync(
+                path.join(__dirname, "public", "data", "presentes.json"),
+                "utf8"
+            )
+        );
 
-            const presente = presentes.find(
-                p => p.id === req.params.id
-            );
+        const presente = presentes.find(
+            p => p.id === req.params.id
+        );
 
-            if (!presente) {
-                return res.status(404).send("Presente não encontrado");
-            }
-
-            const resposta = await preference.create({
-                body: {
-                    external_reference: String(registroId),
-
-                    items: [
-                        {
-                            title: presente.nome,
-                            quantity: 1,
-                            currency_id: "BRL",
-                            unit_price: Number(presente.preco)
-                        }
-                    ],
-                }
-            });
-
-            console.log(resposta);
-            console.log(JSON.stringify(resposta, null, 2));
-            console.log("Presente:", presente);
-            console.log("Preço:", presente.preco);
-            console.log("Tipo:", typeof presente.preco);
-            res.redirect(resposta.init_point);
-
-        } catch (erro) {
-
-            console.error("ERRO MP:");
-            console.error(erro);
-
-            res.status(500).send("Erro ao gerar pagamento");
+        if (!presente) {
+            return res.status(404).send("Presente não encontrado");
         }
-    });
 
-    app.get("/sucesso", (req, res) => {
+        const resposta = await preference.create({
+            body: {
+                external_reference: String(registroId),
 
-        res.send(`
+                items: [
+                    {
+                        title: presente.nome,
+                        quantity: 1,
+                        currency_id: "BRL",
+                        unit_price: Number(presente.preco)
+                    }
+                ],
+            }
+        });
+
+        console.log(resposta);
+        console.log(JSON.stringify(resposta, null, 2));
+        console.log("Presente:", presente);
+        console.log("Preço:", presente.preco);
+        console.log("Tipo:", typeof presente.preco);
+        res.redirect(resposta.init_point);
+
+    } catch (erro) {
+
+        console.error("ERRO MP:");
+        console.error(erro);
+
+        res.status(500).send("Erro ao gerar pagamento");
+    }
+});
+
+app.get("/sucesso", (req, res) => {
+
+    res.send(`
         <h1>Pagamento aprovado!</h1>
         <p>Obrigado pelo presente ❤️</p>
         <a href="/">Voltar ao início</a>
     `);
 
-    });
+});
 
-    app.get("/falha", (req, res) => {
+app.get("/falha", (req, res) => {
 
-        res.send(`
+    res.send(`
         <h1>Pagamento recusado</h1>
         <a href="/">Voltar</a>
     `);
 
-    });
+});
 
-    app.get("/pendente", (req, res) => {
+app.get("/pendente", (req, res) => {
 
-        res.send(`
+    res.send(`
         <h1>Pagamento pendente</h1>
         <p>Estamos aguardando a confirmação do pagamento.</p>
         <a href="/">Voltar</a>
     `);
 
-    });
+});
 
-    app.get("/cancelar/:id", adminAuth, (req, res) => {
-
-        db.run(
+app.get("/cancelar/:id", adminAuth, async (req, res) => {
+    try {
+        await db.query(
             `
-        UPDATE presentes
-        SET status = 'cancelado'
-        WHERE id = ?
-        `,
-            [req.params.id],
-            function (err) {
-
-                if (err) {
-                    return res.status(500).send("Erro");
-                }
-
-                res.send("Cancelado!");
-            }
+            UPDATE presentes
+            SET status = 'cancelado'
+            WHERE id = $1
+            `,
+            [req.params.id]
         );
 
-    });
+        res.send("Cancelado!");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro");
+    }
+});
 
-    app.get("/admin", adminAuth, (req, res) => {
+app.get("/admin", adminAuth, (req, res) => {
 
-        res.sendFile(
-            path.join(
-                __dirname,
-                "public",
-                "views",
-                "admin.html"
-            )
-        );
+    res.sendFile(
+        path.join(
+            __dirname,
+            "public",
+            "views",
+            "admin.html"
+        )
+    );
 
-    });
+});
 
-    app.get("/admin/dados", adminAuth, (req, res) => {
+app.get("/admin/dados", adminAuth, async (req, res) => {
+    try {
+        const resultado = await db.query(`
+            SELECT *
+            FROM presentes
+            ORDER BY data DESC
+        `);
 
-        db.all(
+        res.json(resultado.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json([]);
+    }
+});
+
+app.get("/presentes-comprados", async (req, res) => {
+    try {
+        const resultado = await db.query(`
+            SELECT presente_id, status
+            FROM presentes
+        `);
+
+        res.json(resultado.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json([]);
+    }
+});
+
+app.get("/aprovar/:id", adminAuth, async (req, res) => {
+    try {
+        await db.query(
             `
-        SELECT *
-        FROM presentes
-        ORDER BY data DESC
-        `,
-            [],
-            (err, rows) => {
-
-                if (err) {
-                    return res.status(500).json([]);
-                }
-
-                res.json(rows);
-            }
+            UPDATE presentes
+            SET status = 'aprovado'
+            WHERE id = $1
+            `,
+            [req.params.id]
         );
 
-    });
+        res.send("Aprovado!");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Erro");
+    }
+});
 
-    app.get("/cancelar/:id", (req, res) => {
+app.get("/meus-presentes", (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            "public",
+            "views",
+            "meus-presentes.html"
+        )
+    );
+});
 
-        db.run(
+app.get("/meus-presentes/:telefone", async (req, res) => {
+    try {
+        const resultado = await db.query(
             `
-        UPDATE presentes
-        SET status = 'cancelado'
-        WHERE id = ?
-        `,
-            [req.params.id],
-            function (err) {
-
-                if (err) {
-                    return res.status(500).send("Erro");
-                }
-
-                res.send("Cancelado");
-            }
+            SELECT *
+            FROM presentes
+            WHERE telefone = $1
+            ORDER BY data DESC
+            `,
+            [req.params.telefone]
         );
 
-    });
+        res.json(resultado.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json([]);
+    }
+});
 
-    app.get("/presentes-comprados", (req, res) => {
+app.get("/mensagens-mural", async (req, res) => {
+    try {
+        const resultado = await db.query(`
+            SELECT nome, mensagem
+            FROM presentes
+            WHERE status = 'aprovado'
+            AND mensagem IS NOT NULL
+            AND mensagem != ''
+            ORDER BY data DESC
+        `);
 
-        db.all(
-            `
-        SELECT presente_id, status
-        FROM presentes
-        `,
-            [],
-            (err, rows) => {
-
-                if (err) {
-                    return res.status(500).json([]);
-                }
-
-                res.json(rows);
-            }
-        );
-
-    });
-
-    app.get("/aprovar/:id", adminAuth, (req, res) => {
-
-        db.run(
-            `
-        UPDATE presentes
-        SET status = 'aprovado'
-        WHERE id = ?
-        `,
-            [req.params.id],
-            function (err) {
-
-                if (err) {
-                    console.error(err);
-                    return res.status(500).send("Erro");
-                }
-
-                res.send("Aprovado!");
-            }
-        );
-
-    });
-
-    app.get("/meus-presentes", (req, res) => {
-        res.sendFile(
-            path.join(
-                __dirname,
-                "public",
-                "views",
-                "meus-presentes.html"
-            )
-        );
-    });
-
-    app.get("/meus-presentes/:telefone", (req, res) => {
-
-        db.all(
-            `
-        SELECT *
-        FROM presentes
-        WHERE telefone = ?
-        ORDER BY data DESC
-        `,
-            [req.params.telefone],
-            (err, rows) => {
-
-                if (err) {
-                    return res.status(500).json([]);
-                }
-
-                res.json(rows);
-            }
-        );
-
-    });
-
-    app.get("/mensagens-mural", (req, res) => {
-
-        db.all(
-            `
-        SELECT nome, mensagem
-        FROM presentes
-        WHERE status = 'aprovado'
-        AND mensagem IS NOT NULL
-        AND mensagem != ''
-        ORDER BY data DESC
-        `,
-            [],
-            (err, rows) => {
-
-                if (err) {
-                    return res.status(500).json([]);
-                }
-
-                res.json(rows);
-            }
-        );
-
-    });
-
-    app.listen(PORT, () => {
-        console.log(`Servidor rodando em http://localhost:${PORT}`);
-    });
+        res.json(resultado.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json([]);
+    }
+});
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
+});
